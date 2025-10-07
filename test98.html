@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+        body {
+            background-color: #36413E;
+            font-family: "Noto Serif Thai", "Noto Serif";
+            color: #D7D6D6;
+            font-size: 1.25rem
+        }
+
+        h1 {
+            font-size: 6rem;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        #main-input {
+            all: unset;
+            text-align: center;
+            border: #D7D6D6 3px solid;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 3.25rem;
+            width: 30rem;
+            background-color: transparent;
+            color: #D7D6D6;
+            padding: 0.75rem;
+        }
+
+        .incorrect {
+            border-color: darkorange !important;
+            background-color: #720a !important;
+            color: darkorange !important;
+        }
+
+        .correct {
+            border-color: lightgreen !important;
+            color: lightgreen !important;
+            background-color: #0509 !important;
+        }
+
+        #main-container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin: auto
+        }
+
+        #info-p {
+            white-space: pre-wrap;
+            font-size: 1.25rem;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div style="display: flex;flex-direction: row;justify-content: flex-start;align-items: center;">
+        <div style="
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    min-width: 30rem;
+    padding-right: 2rem;
+">
+            <section
+                style="height: 48vh;overflow: auto;scrollbar-color: gray transparent;border:#D7D6D6 3px solid;max-width: inherit;border-bottom: none;">
+                <details style="border-bottom: #d7d6d6 3px solid;padding: 1rem;">
+                    <summary>Part 1: The M-class, and top- and right-positioned vowels</summary>
+                    <p>New consonants:
+                    </p>
+                    <ul>
+                        <li>⟨ก⟩ /k/</li>
+                        <li>⟨จ⟩ /c/</li>
+                        <li>⟨ด⟩ /d/</li>
+                        <li>⟨ต⟩ /t/</li>
+                        <li>⟨บ⟩ /b/</li>
+                        <li>⟨ป⟩ /p/</li>
+                        <li>⟨อ⟩ /ʔ/</li>
+
+                    </ul>
+                    <p></p>
+
+                    <p>New vowels:
+                    </p>
+                    <ul>
+                        <li>⟨ &nbsp;ี⟩ /i:/</li>
+                        <li>⟨ &nbsp;ู⟩ /u:/</li>
+                        <li>⟨า⟩ /a:/</li>
+                    </ul>
+                    <p></p>
+
+                    <p>New rules:
+                    </p>
+                    <ol>
+                        <li>Syllables of the form <b>/MV:/</b> take the zeroth (middle/flat) tone. </li>
+                        <li>Syllables of the form <b>/MV:M/</b> take the first (low) tone.</li>
+                    </ol>
+
+
+                    <p></p>
+
+                    <p>M- (mid-) class consonants are a grouping of two natural classes:
+                    </p>
+                    <ol>
+                        <li>the voiced stops ⟨ด บ⟩; /d b/</li>
+                        <li>the unvoiced unaspirated stops ⟨ก จ ต ป อ⟩; /k c t p ʔ/</li>
+                    </ol>
+                    <p></p>
+
+                    <p>Open syllables with mid-class consonant initials, long vowel nuclei, and no final consonant
+                        (/MV:/)
+                        take the zeroth tone (a flat, mid-level tone 33). Closed syllables with mid-class consonant
+                        initials, long vowel nuclei, and a mid-class final consonant (/MV:M/) take the first tone (a
+                        flat,
+                        low tone 11).</p>
+
+
+
+                </details>
+            </section>
+            <section style="height: 48vh;overflow: auto;scrollbar-color: gray transparent;border:#D7D6D6 3px solid;">
+                <div style="margin:1rem">
+                    <h2 id="help-h2"></h2>
+                    <p id="info-p"></p>
+                </div>
+            </section>
+        </div>
+
+
+        <div id="main-container">
+            <h1 id="headword">กา</h1>
+            <input id="main-input">
+            <p id="info-p"></p>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        // data
+        const set_1 = {
+            'กา': { 'rm': `ka:`, 'en': `crow (อีกา); kettle (กาน้ำ); to tick, make a cross (ข้อกา)` },
+            'จา': { 'rm': `ca:`, 'en': `speech (พูดจา)` },
+            'ตา': { 'rm': `ta:`, 'en': `eye` },
+            'ปา': { 'rm': `pa:`, 'en': `to throw` },
+            'อา': { 'rm': `a:`, 'en': `uncle` },
+            'ดี': { 'rm': `di:`, 'en': `good` },
+            'ตี': { 'rm': `ti:`, 'en': `to hit, strike` },
+            'ปี': { 'rm': `pi:`, 'en': `year` },
+            'กู': { 'rm': `ku:`, 'en': `I (informal 1PS pronoun)` },
+            'ดู': { 'rm': `du:`, 'en': `to watch` },
+            'ปู': { 'rm': `pu:`, 'en': `crab` },
+            'กีด': { 'rm': `ki:t1`, 'en': `to block, prevent (กีดขวาง)` },
+            'ดูด': { 'rm': `du:t1`, 'en': `to suck, absorb` },
+            'อาบ': { 'rm': `a:p1`, 'en': `to bathe, shower` },
+            'ตาก': { 'rm': `ta:k1`, 'en': `to dry (in the sun, etc.)` },
+            'ดีด': { 'rm': `di:t1`, 'en': `to flick` },
+            'ปีก': { 'rm': `pi:k1`, 'en': `wing` },
+            'อีก': { 'rm': `i:k1`, 'en': `more` },
+            'ปาก': { 'rm': `pa:k1`, 'en': `mouth` },
+            'จาก': { 'rm': `ca:k1`, 'en': `from` },
+            'บาด': { 'rm': `ba:t1`, 'en': `injure (บาดเจ็บ)` },
+            'บูด': { 'rm': `bu:t1`, 'en': `to spoil, rot` }
+        }
+        const set_2 = {
+            'แก': { 'rm': `kae:`, 'en': `you (informal 2PS pronoun)` },
+            'เจ': { 'rm': `ce:`, 'en': `vegetarian food (อาหารเจ)` },
+            'แบ': { 'rm': `bae:`, 'en': `to spread open (แบมือ)` },
+            'โต': { 'rm': `to:`, 'en': `to grow` },
+            'แดก': { 'rm': `dae:k1`, 'en': `to eat (informal)` },
+            'แตก': { 'rm': `tae:k1`, 'en': `to burst, break` },
+            'แบก': { 'rm': `bae:k1`, 'en': `to carry, shoulder` },
+            'แจก': { 'rm': `cae:k1`, 'en': `to distribute, give sth. out` },
+            'โบก': { 'rm': `bo:k1`, 'en': `to hail, wave one's hand` },
+            'โดด': { 'rm': `do:t1`, 'en': `to jump` },
+            'โอด': { 'rm': `o:t1`, 'en': `to lament (โอดครวญ)` },
+            'แปด': { 'rm': `pae:t1`, 'en': `eight` },
+            'เกด': { 'rm': `ke:t1`, 'en': `raisin (ลูกเกด)` },
+            'แดด': { 'rm': `dae:t1`, 'en': `sunlight` },
+            'แบบ': { 'rm': `bae:p1`, 'en': `kind, type` },
+            'แอบ': { 'rm': `ae:p1`, 'en': `to do sth. secretly` }
+        }
+        const set_3 = {
+            'จอ': { 'rm': `ceo:`, 'en': `screen, monitor` },
+            'เจอ': { 'rm': `coe:`, 'en': `to meet` },
+            'เออ': { 'rm': `oe:`, 'en': `yeah, mhm (interjection)` },
+            'จืด': { 'rm': `ceu:t1`, 'en': `flavorless` },
+            'อืด': { 'rm': `eu:t1`, 'en': `swollen (cf. เส้นอืด, ท้องอืด)` },
+            'เกิด': { 'rm': `koe:t1`, 'en': `to be born` },
+            'เบิก': { 'rm': `boe:k1`, 'en': `to withdraw money (cf. เบิกเงิน)` },
+            'เปิด': { 'rm': `poe:t1`, 'en': `to open` },
+            'เติบ': { 'rm': `toe:p1`, 'en': `to grow up (cf. เติบโต)` },
+            'กอด': { 'rm': `keo:t1`, 'en': `to hug` },
+            'จอด': { 'rm': `ceo:t1`, 'en': `to park` },
+            'ปอด': { 'rm': `peo:t1`, 'en': `lungs` },
+            'บอด': { 'rm': `beo:t1`, 'en': `blind` },
+            'บอก': { 'rm': `beo:k1`, 'en': `to tell, mention` },
+            'ตอก': { 'rm': `teo:k1`, 'en': `to break an egg (cf. ตอกใข่)` },
+            'ดอก': { 'rm': `deo:k1`, 'en': `flower (cf. ดอกไม้)` },
+            'บอบ': { 'rm': `beo:p1`, 'en': `fragile (cf. บอบบาง)` },
+            'ปอก': { 'rm': `peo:k1`, 'en': `to peel, pare` }
+        }
+        const set_4 = {
+            'กะ': { 'rm': `ka1`, 'en': `to estimate; to intend to do sth.` },
+            'จะ': { 'rm': `ca1`, 'en': `will (future tense marker)` },
+            'กัก': { 'rm': `kak1`, 'en': `to detain, confine` },
+            'กัด': { 'rm': `kat1`, 'en': `to bite` },
+            'กับ': { 'rm': `kap1`, 'en': `with, and` },
+            'จัด': { 'rm': `cat1`, 'en': `to arrange` },
+            'จับ': { 'rm': `cap1`, 'en': `to catch, hold` },
+            'ดัก': { 'rm': `dak1`, 'en': `to trap` },
+            'ดัด': { 'rm': `dat1`, 'en': `to bend, to alter (cf. ดัดแปลง)` },
+            'ดับ': { 'rm': `dap1`, 'en': `to extinguish` },
+            'ตัก': { 'rm': `tak1`, 'en': `to scoop; lap` },
+            'ตัด': { 'rm': `tat1`, 'en': `to cut` },
+            'ตับ': { 'rm': `tap1`, 'en': `liver` },
+            'ปัก': { 'rm': `pak1`, 'en': `to insert, stick into (cf. ปักหมุด)` },
+            'ปัด': { 'rm': `pat1`, 'en': `to brush off` },
+            'อัด': { 'rm': `at1`, 'en': `compressed, squeezed` },
+            'อับ': { 'rm': `ap1`, 'en': `stale, musty` },
+            'จุก': { 'rm': `cuk1`, 'en': `to feel winded, to feel full` },
+            'จุด': { 'rm': `cut1`, 'en': `point` },
+            'ดุ': { 'rm': `du1`, 'en': `to scold` },
+            'บุก': { 'rm': `buk1`, 'en': `to invade` },
+            'อุด': { 'rm': `ut1`, 'en': `to fill in, block up with sth. (cf. อุดฟัน)` },
+            'ดึก': { 'rm': `deuk1`, 'en': `late at night` },
+            'ตึก': { 'rm': `teuk1`, 'en': `(a) building` },
+            'อึด': { 'rm': `eut1`, 'en': `uncomfortable (cf. อึดอัด)` },
+            'จิก': { 'rm': `cik1`, 'en': `to peck` },
+            'จิบ': { 'rm': `cip1`, 'en': `to sip` },
+            'ดิบ': { 'rm': `dip1`, 'en': `raw` },
+            'ติ': { 'rm': `ti1`, 'en': `to rebuke (cf. ติชม)` },
+            'ติด': { 'rm': `tit1`, 'en': `to stick, adhere` },
+            'บิด': { 'rm': `bit1`, 'en': `to twist` },
+            'ปิด': { 'rm': `pit1`, 'en': `to close` },
+            'เตะ': { 'rm': `te1`, 'en': `to kick` },
+            'เก็บ': { 'rm': `kep1`, 'en': `to keep` },
+            'เจ็ด': { 'rm': `cet1`, 'en': `seven` },
+            'เจ็บ': { 'rm': `cep1`, 'en': `to hurt, be painful` },
+            'เด็ก': { 'rm': `dek1`, 'en': `child` },
+            'เด็ด': { 'rm': `det1`, 'en': `to pluck, pick (เด็ดดอกไม้); absolutely (not) (เด็ดขาด)` },
+            'เป็ด': { 'rm': `pet1`, 'en': `(a) duck` },
+            'เอ็ด': { 'rm': `et1`, 'en': `one (only in the units place in 21, 131, etc.)` },
+            'แกะ': { 'rm': `kae1`, 'en': `to open, to peel; sheep` },
+            'แตะ': { 'rm': `tae1`, 'en': `to touch lightly` },
+            'แปะ': { 'rm': `pae1`, 'en': `to stick, paste` },
+            'เกาะ': { 'rm': `keo1`, 'en': `island; to cling, clutch` },
+            'เจาะ': { 'rm': `ceo1`, 'en': `to puncture` },
+            'เบาะ': { 'rm': `beo1`, 'en': `cushion, seating (cf. เบาะหน้า/หลัง)` },
+            'กด': { 'rm': `tok1`, 'en': `to press` },
+            'กบ': { 'rm': `kop1`, 'en': `frog; pencil sharpener (กบเหลาดินสอ)` },
+            'จด': { 'rm': `cot1`, 'en': `to note down` },
+            'ปก': { 'rm': `pok1`, 'en': `book cover; to protect, govern (cf. ปกป้อง, ปกครอง)` },
+            'อก': { 'rm': `ok1`, 'en': `breast, chest` },
+            'ตก': { 'rm': `tok1`, 'en': `to fall` },
+            'ตบ': { 'rm': `top1`, 'en': `to slap` }
+        }
+        const set_5 = {
+            'เปีย': { 'rm': `pia`, 'en': `braid` },
+            'เปียก': { 'rm': `piak1`, 'en': `wet` },
+            'เบียด': { 'rm': `biat1`, 'en': `to crowd, push against` },
+            'เจือ': { 'rm': `ceua`, 'en': `to dilute, mix, adulterate (cf. เจือจาง)` },
+            'เดือด': { 'rm': `deuat1`, 'en': `to boil` },
+            'เกือบ': { 'rm': `keuap1`, 'en': `nearly` },
+            'ตัว': { 'rm': `tua`, 'en': `body; counter for animals` },
+            'บัว': { 'rm': `bua`, 'en': `lotus` },
+            'อวบ': { 'rm': `uap1`, 'en': `stout, plump` },
+            'บวก': { 'rm': `buak1`, 'en': `to add` },
+            'กวด': { 'rm': `kuat1`, 'en': `to cram, pursue, be strict (cf. กวดวิชา)` },
+            'ปวด': { 'rm': `puat1`, 'en': `to ache, be sore` }
+        }
+
+        const sets = { set_1, set_2, set_3, set_4, set_5 }
+
+        const helpers = {
+            set_1: [
+                [/ี/g, 'i:', 'ี > i:', 'the long vowel <i:> /i:/'],
+                [/ู/g, 'u:', 'ู > u:', 'the long vowel <u:> /u:/'],
+                [/า/g, 'a:', 'า > a:', 'the long vowel <a:> /a:/'],
+                [/ก/g, 'k', 'ก > k', 'the mid-class consonant <k> /k˭/: an unaspirated (tenuis) "k"'],
+                [/จ/g, 'c', 'จ > c', 'the mid-class consonant <c> /c˭/: an unaspirated (tenuis) "c"'],
+                [/ด/g, 'd', 'ด > d', 'the mid-class consonant <d> /d/: "d", a voiced plosive. Unaspirated.'],
+                [/ต/g, 't', 'ต > t', 'the mid-class consonant <t> /t˭/: an unaspirated (tenuis) "t"'],
+                [/บ/g, 'b', 'บ > b', 'the mid-class consonant <b> /b/: "b", a voiced plosive. Unaspirated.'],
+                [/ป/g, 'p', 'ป > p', 'the mid-class consonant <p> /p˭/: an unaspirated (tenuis) "p"'],
+                [/อ/g, 'ʔ', 'อ > ʔ', `the mid-class consonant <> (') /ʔ/: a glottal stop.`],
+                [/d$/g, 't', 'final d > t', 'final stops are unreleased. For consistency, all final stops are transcribed with their unvoiced variant.'],
+                [/b$/g, 'p', 'final b > p', 'final stops are unreleased. For consistency, all final stops are transcribed with their unvoiced variant.'],
+                [/^([kcdtbpʔ][aui]:)$/g, '$1(0)', 'MV: > MV:(0)', 'an unmarked syllable with mid-class consonant onset, long-vowel nucleus, and zero coda takes the zero (flat) tone'],
+                [/^([kcdtbpʔ][aui]:.)$/g, '$11', 'MV:C > MV:C(1)', 'an unmarked syllable with mid-class consonant onset, long-vowel nucleus, and mid-class consonant coda takes the first (low) tone'],
+                [/ʔ/g, '', 'ʔ = ∅ (null)', 'the null (glottal stop) onset is not transcribed with a symbol.']
+            ]
+        }
+
+
+
+
+
+
+        // variables
+        const headword = document.querySelector("#headword")
+        const mainInput = document.querySelector("#main-input")
+        const infoP = document.querySelector("#info-p")
+        const helpH2 = document.querySelector("#help-h2")
+        var currentWord = 'กา'
+        var currentSet = 'set_1'
+        var currentGuess = ''
+        var stateFlag = 'BLANK'
+
+
+
+
+        // functions
+        function send(x) {
+            if (stateFlag == 'BLANK') {
+                stateFlag = 'REVEAL'
+                currentGuess = x;
+
+                if (currentGuess == sets[currentSet][currentWord].rm) {
+                    infoP.innerText = `${currentWord}:\n\t${sets[currentSet][currentWord].rm}\n\t${sets[currentSet][currentWord].en}`
+                    helpH2.innerText = 'Correct'
+                    mainInput.classList += 'correct'
+
+                    console.log(`${currentWord}:\n\t${sets[currentSet][currentWord].rm}\n\t${sets[currentSet][currentWord].en}, correct`)
+                }
+                else {
+                    a = currentWord
+                    helpText = ''
+                    helpH2.innerText = 'Incorrect'
+                    mainInput.classList += 'incorrect'
+                    mainInput.value += ` → ${sets[currentSet][currentWord].rm}`
+
+                    helpers.set_1.forEach(
+                        tetrad => {
+                            b = a.replaceAll(tetrad[0], tetrad[1])
+
+                            if (a != b) {
+                                helpText += `${a} → ${b}\n\t${tetrad[2]}\n\t${tetrad[3]}\n\n`
+                            }
+
+                            a = b;
+                        }
+                    )
+
+                    infoP.innerText = `${currentWord}:\n\t${sets[currentSet][currentWord].rm}\n\t${sets[currentSet][currentWord].en}\n\n\n\n\n${helpText}`
+
+                    console.log(`"${currentWord}":\n\t"${sets[currentSet][currentWord].rm}"\n\t${sets[currentSet][currentWord].en}\n\nHelp:\n${helpText}`)
+                }
+
+                infoP.innerHTML = infoP.innerHTML.replaceAll(/&lt;(.*?)&gt;/g, '&lang;$1&rang;')
+                infoP.innerHTML = infoP.innerHTML.replace(/<br><br><br><br><br>/, '<br/><br/><hr/><br/>')
+                oldWord = currentWord
+
+                while (oldWord == currentWord) {
+                    currentWord = Object.keys(set_1)[
+                        Object.keys(set_1).length * Math.random() << 0
+                    ]
+                }
+
+                currentGuess = ''
+                console.log(`${currentSet}: ${currentWord}`)
+            }
+            else if (stateFlag == 'REVEAL') {
+                stateFlag = 'BLANK'
+                headword.innerText = currentWord
+
+                infoP.innerText = ''
+                mainInput.value = ''
+                helpH2.innerText = ''
+                mainInput.classList = ''
+            }
+        }
+
+
+
+        // event listeners
+        mainInput.addEventListener(type = 'keypress', (e) => {
+            if (e.key === 'Enter') {
+                send(e.target.value)
+            }
+        })
+
+
+
+        // onload
+        window.onload = () => {
+            headword.innerText = currentWord
+            console.log(`${currentSet}: ${currentWord}`)
+        }
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
